@@ -1,9 +1,7 @@
-import { NextPage } from "next";
+import { NextPage } from "next"
 
 const Index: NextPage = () => {
-  return (
-    <div>Hello, world</div>
-  )
+  return <div>Hello, world</div>
 }
 
 export default Index
