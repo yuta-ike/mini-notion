@@ -19,6 +19,8 @@ jobs:
         with:
           node-version: "14"
           cache: yarn
+      - name: install packages
+        run: yarn
       - name: lint
         run: yarn lint
   format:
@@ -31,5 +33,7 @@ jobs:
         with:
           node-version: "14"
           cache: yarn
+      - name: install packages
+        run: yarn
       - name: format
         run: yarn format
