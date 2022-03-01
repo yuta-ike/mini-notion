@@ -10,7 +10,7 @@
     "lint:fix": "yarn lint --fix",
     "format": "yarn prettier --check \"**/*.{js,ts,jsx,tsx,json}\"",
     "format:fix": "yarn format --write",
-    "fix": "yarn run run-p lint:fix format:fix",
+    "fix": "run-p lint:fix format:fix",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {

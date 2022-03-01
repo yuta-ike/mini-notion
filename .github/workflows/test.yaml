@@ -20,4 +20,16 @@ jobs:
           node-version: "14"
           cache: yarn
       - name: lint
-        run: yarn fix
+        run: yarn lint
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+          cache: yarn
+      - name: format
+        run: yarn format
