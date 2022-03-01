@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "pkna";
+  height: 100vh;
+  @apply bg-stone-50 font-sans;
+}
+
+#__next {
+  height: 100%;
+}
