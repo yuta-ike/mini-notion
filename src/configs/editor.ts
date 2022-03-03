@@ -89,3 +89,9 @@ export const blockTypes: Record<string, BlockType> = {
     breakType: "inherit",
   },
 }
+
+export const defaultBlock = {
+  content: "",
+  type: "p" as const,
+  depth: 0,
+}

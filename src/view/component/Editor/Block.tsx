@@ -1,6 +1,6 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react"
 import classNames from "classnames"
-import { Block, blockTypes, classes, placeholders } from "../../../type/Editor"
+import { Block, blockTypes, classes } from "../../../configs/editor"
 import { useEditorContextValue } from "./context"
 import getCaretPos from "textarea-caret"
 
@@ -173,7 +173,6 @@ const BlockComponent = React.forwardRef<HTMLTextAreaElement | null, BlockProps>(
 
       // NOTE: 一番大きいH1が12、一番小さいpが2行の時が27なので、15を閾値とすれば1行か複数行か判定できる
       const isFirstLine = pos.top < 15
-      console.log(pos.top)
       const isLastLine =
         Math.abs(textareaRef.current.getBoundingClientRect().height - (pos.top + pos.height)) < 15
       // TODO: ここも厳密に計算する必要あり
@@ -189,7 +188,7 @@ const BlockComponent = React.forwardRef<HTMLTextAreaElement | null, BlockProps>(
     }, [caretOffset])
 
     return (
-      <div className={classNames("relative my-1 flex min-h-[1em]", className)} ref={wrapperRef}>
+      <div className={classNames("relative flex min-h-[1em] pb-1", className)} ref={wrapperRef}>
         {isFocused && (
           <textarea
             rows={1}
@@ -200,7 +199,6 @@ const BlockComponent = React.forwardRef<HTMLTextAreaElement | null, BlockProps>(
               classes[type],
             )}
             style={{ "--data-depth": depth, "--data-depth-mod-3": depth % 3 }}
-            placeholder={placeholders[type]}
             value={content}
             onChange={(e) => onChange(e.target.value)}
             onPointerDown={() => setIsDragging(true)}
@@ -243,12 +241,19 @@ const BlockComponent = React.forwardRef<HTMLTextAreaElement | null, BlockProps>(
 
         <div
           className={classNames(
-            "w-full cursor-text whitespace-pre-wrap break-all before:text-gray-200 empty:before:block empty:before:content-[attr(placeholder)] focus:outline-none",
+            "w-full cursor-text whitespace-pre-wrap break-all before:text-gray-300 focus:outline-none",
             isFocused && "text-transparent",
+            content.length === 0 &&
+              "inset-y-0 left-0 before:absolute before:block before:content-[attr(placeholder)]",
             classes[type],
           )}
           style={{ "--data-depth": depth, "--data-depth-mod-3": depth % 3 }}
           ref={divRef}
+          placeholder={
+            blockTypes[type].placeholder.showAlways || isFocused
+              ? blockTypes[type].placeholder.content
+              : ""
+          }
           contentEditable={!selectMode}
           suppressContentEditableWarning
           tabIndex={-1}

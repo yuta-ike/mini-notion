@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "pkna";
   height: 100vh;
-  @apply bg-stone-50 font-sans;
+  @apply font-sans;
 }
 
 #__next {

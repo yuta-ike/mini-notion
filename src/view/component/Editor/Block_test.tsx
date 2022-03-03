@@ -1,6 +1,6 @@
 import React, { useCallback, useImperativeHandle, useRef } from "react"
 import classNames from "classnames"
-import { Block, classes, placeholders } from "../../../type/Editor"
+import { Block, classes, placeholders } from "../../../type/editor"
 import { useEditorContextValue } from "./context"
 
 export type BlockProps = {

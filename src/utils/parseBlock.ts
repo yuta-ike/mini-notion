@@ -1,4 +1,4 @@
-import { Block, blockTypes } from "../type/Editor"
+import { Block, blockTypes } from "../configs/editor"
 
 const parseBlock = (str: string, parentBlock: Block): Block[] => {
   const blockTexts = str.split("\n")
@@ -8,7 +8,7 @@ const parseBlock = (str: string, parentBlock: Block): Block[] => {
   if (1 < blockTexts.length && str.replaceAll("\n", "").length === 0) {
     return [
       {
-        type: "p",
+        type: "p" as const,
         content: "",
         depth: 0,
       },

@@ -1,34 +1,41 @@
-import React, { useRef, useState } from "react"
+import React, { useCallback, useRef, useState } from "react"
 import classNames from "classnames"
-import { Block, blockTypes } from "../../../type/Editor"
+import { Block, blockTypes, defaultBlock } from "../../../configs/editor"
 import BlockComponent, { BlockFocus } from "./Block"
 import parseBlock from "../../../utils/parseBlock"
 import { useEditorContextValue, useSetEditorContext } from "./context"
+import { encodeBase64 } from "../../../utils/base64/encodeBase64"
 
 export type EditorProps = {
   className?: string
+  initBlocks: Block[]
 }
 
-const initBlock = {
-  content: "",
-  type: "p" as const,
-  depth: 0,
-}
-
-const Editor: React.VFC<EditorProps> = ({ className }) => {
-  const [blocks, setBlocks] = useState<Block[]>([initBlock])
+const Editor: React.VFC<EditorProps> = ({ className, initBlocks }) => {
+  const [blocks, setBlocks] = useState<Block[]>(initBlocks)
   const blockRefs = useRef<(HTMLTextAreaElement | null)[]>([])
   const blockFocusRef = useRef<({ blockFocus: BlockFocus } | null)[]>([])
   const setEditorContext = useSetEditorContext()
   const { selectMode } = useEditorContextValue()
 
+  const copyUrl = useCallback(async () => {
+    const code = encodeBase64(JSON.stringify(blocks))
+    await navigator.clipboard.writeText(`${window.location.origin}/?code=${code}`)
+    window.alert("クリップボードにリンクをコピーしました。リンクを知る全員がアクセス可能です。")
+  }, [blocks])
+
   return (
     <>
+      <div className="fixed top-12 right-12 z-10">
+        <button
+          className="rounded border border-slate-300 bg-white/50 px-4 py-2 backdrop-blur-[2px] hover:bg-gray-100"
+          onClick={copyUrl}
+        >
+          Share
+        </button>
+      </div>
       <div
-        className={classNames(
-          "rounded border border-slate-200 bg-white px-8 py-6 shadow-md",
-          className,
-        )}
+        className={classNames("flex flex-col rounded bg-white px-8 py-6", className)}
         onPointerDown={() => setEditorContext({ selectMode: true })}
         onPointerUp={() => setEditorContext({ selectMode: false })}
       >
@@ -56,25 +63,25 @@ const Editor: React.VFC<EditorProps> = ({ className }) => {
                   e.preventDefault()
                   setBlocks((blocks) => {
                     const newBlocks = [...blocks]
-                    if (block.type === initBlock.type) {
+                    if (block.type === defaultBlock.type && 1 < blocks.length) {
                       // 消す
                       newBlocks.splice(i, 1)
                       blockFocusRef.current[i - 1]?.blockFocus(caretOffset)
                     } else {
                       // タイプをリセット
-                      newBlocks.splice(i, 1, initBlock)
+                      newBlocks.splice(i, 1, defaultBlock)
                     }
                     return newBlocks
                   })
                 } else if (isCaretFirst) {
-                  if (block.type !== initBlock.type) {
+                  if (block.type !== defaultBlock.type) {
                     // スタイルを削除
                     setBlocks((blocks) => {
                       const newBlocks = [...blocks]
                       const depth = Math.max(block.depth - 1, 0)
                       newBlocks.splice(i, 1, {
                         ...block,
-                        type: initBlock.type,
+                        type: defaultBlock.type,
                         depth,
                       })
                       return newBlocks
@@ -178,12 +185,19 @@ const Editor: React.VFC<EditorProps> = ({ className }) => {
             }}
           />
         ))}
+        <div
+          key="click-area"
+          className="h-[80vh] w-full shrink-0 grow"
+          onClick={() =>
+            blockFocusRef.current[blockFocusRef.current.length - 1]?.blockFocus?.(
+              blocks[blocks.length - 1].content.length,
+            )
+          }
+        />
       </div>
-      <div className="fixed inset-x-0 bottom-0 w-[360px]">
-        {selectMode ? "true" : "false"}
-        <br />
-        {JSON.stringify(blocks)}
-      </div>
+      {process.env.NODE_ENV === "development" && (
+        <div className="fixed inset-x-0 bottom-0 w-[360px]">{JSON.stringify(blocks)}</div>
+      )}
     </>
   )
 }
