@@ -5,7 +5,7 @@ const parseBlock = (str: string, parentBlock: Block): Block[] => {
   const shouldReset = blockTypes[parentBlock.type].breakType === "reset"
 
   // 空行の場合
-  if (1 < blockTexts.length && str.replaceAll("\n", "").length === 0) {
+  if (parentBlock.type !== "p" && 1 < blockTexts.length && str.replaceAll("\n", "").length === 0) {
     return [
       {
         type: "p" as const,

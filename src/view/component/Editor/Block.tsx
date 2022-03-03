@@ -195,7 +195,7 @@ const BlockComponent = React.forwardRef<HTMLTextAreaElement | null, BlockProps>(
             spellCheck={false}
             ref={textareaRef}
             className={classNames(
-              "absolute inset-0 w-full select-none resize-none whitespace-pre-wrap break-all rounded-none bg-transparent caret-black placeholder:text-gray-300 focus:outline-none",
+              "absolute inset-0 block w-full select-none resize-none whitespace-pre-wrap break-all rounded-none bg-transparent caret-black placeholder:text-gray-300 focus:outline-none",
               classes[type],
             )}
             style={{ "--data-depth": depth, "--data-depth-mod-3": depth % 3 }}

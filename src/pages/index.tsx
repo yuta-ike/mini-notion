@@ -24,7 +24,7 @@ const Index: NextPage<IndexProps> = ({ code }) => {
     }
     try {
       return JSON.parse(code)
-    } catch {
+    } catch (e) {
       return defaultInitBlocks
     }
   }, [code])
