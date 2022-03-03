@@ -1,10 +1,11 @@
 module.exports = {
-  content: ["./src/**/*.{tsx,jsx}"],
+  content: ["./src/**/*.{ts,tsx,jsx}"],
   theme: {
     extend: {
       fontFamily: {
         sans: [
-          "'Noto Sans JP'",
+          // "'Noto Sans JP'",
+          "ui-sans-serif",
           "-apple-system",
           "'Helvetica Neue'",
           "Arial",
@@ -29,5 +30,5 @@ module.exports = {
     },
   },
   plugins: [],
-  safelist: ["leading-[2em]", "text-2xl", "text-xl", "font-bold"],
+  safelist: ["leading-[2em]", "text-3xl", "text-2xl", "text-xl", "text-sm", "text-lg", "font-bold"],
 }

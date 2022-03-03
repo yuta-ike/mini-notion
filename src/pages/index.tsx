@@ -9,8 +9,8 @@ const Index: NextPage = () => {
   }, [])
   return (
     <div className="h-full p-8">
-      <article className="max-w-90% mx-auto h-full w-[800px]">
-        <Editor className="h-full" />
+      <article className="mx-auto w-[800px] max-w-[90%] overflow-scroll">
+        <Editor className="min-h-[80vh]" />
       </article>
     </div>
   )
