@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import classNames from "classnames"
 import { Block, blockTypes, defaultBlock } from "../../../configs/editor"
 import BlockComponent, { BlockFocus } from "./Block"
@@ -16,13 +16,16 @@ const Editor: React.VFC<EditorProps> = ({ className, initBlocks }) => {
   const blockRefs = useRef<(HTMLTextAreaElement | null)[]>([])
   const blockFocusRef = useRef<({ blockFocus: BlockFocus } | null)[]>([])
   const setEditorContext = useSetEditorContext()
-  const { selectMode } = useEditorContextValue()
 
   const copyUrl = useCallback(async () => {
     const code = encodeBase64(JSON.stringify(blocks))
     await navigator.clipboard.writeText(`${window.location.origin}/?code=${code}`)
     window.alert("クリップボードにリンクをコピーしました。リンクを知る全員がアクセス可能です。")
   }, [blocks])
+
+  useEffect(() => {
+    blockFocusRef.current[0]?.blockFocus()
+  }, [])
 
   return (
     <>

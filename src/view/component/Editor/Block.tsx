@@ -241,18 +241,19 @@ const BlockComponent = React.forwardRef<HTMLTextAreaElement | null, BlockProps>(
 
         <div
           className={classNames(
-            "w-full cursor-text whitespace-pre-wrap break-all before:text-gray-300 focus:outline-none",
+            "w-full cursor-text whitespace-pre-wrap break-all after:text-gray-300 focus:outline-none",
             isFocused && "text-transparent",
             content.length === 0 &&
-              "inset-y-0 left-0 before:absolute before:block before:content-[attr(placeholder)]",
+              "inset-y-0 left-0 after:absolute after:inset-y-0 after:left-0 after:block after:content-[attr(placeholder)]",
             classes[type],
           )}
           style={{ "--data-depth": depth, "--data-depth-mod-3": depth % 3 }}
           ref={divRef}
           placeholder={
-            blockTypes[type].placeholder.showAlways || isFocused
-              ? blockTypes[type].placeholder.content
-              : ""
+            blockTypes[type].placeholder.content
+            // blockTypes[type].placeholder.showAlways || isFocused
+            //   ? blockTypes[type].placeholder.content
+            //   : ""
           }
           contentEditable={!selectMode}
           suppressContentEditableWarning

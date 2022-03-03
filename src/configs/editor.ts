@@ -12,7 +12,7 @@ export const classes = {
   h2: "text-2xl font-bold leading-[2em]",
   h3: "text-xl font-bold leading-[2em]",
   p: "text-base ml-[calc((var(--data-depth))_*_24px)]",
-  ul: "text-base pl-3 ml-[calc((var(--data-depth)-1)_*_24px_+_12px)] before:ml-[calc(var(--data-depth)_*_24px_-_12px)] before:absolute before:left-0 before:top-1/2 before:h-[5px] before:w-[5px] before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:border before:border-gray-900 before:bg-gray-900 before:content-['']",
+  ul: "text-base pl-3 ml-[calc((var(--data-depth)-1)_*_24px_+_12px)] before:ml-[calc(var(--data-depth)_*_24px_-_12px)] after:ml-[calc(var(--data-depth)_*_24px)] before:absolute before:left-0 before:top-1/2 before:h-[5px] before:w-[5px] before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:border before:border-gray-900 before:bg-gray-900 before:content-['']",
   // NOTE: 行頭記号の切り替え before:rounded-[calc(var(--data-depth-mod-3)_*_10px)]
 }
 
