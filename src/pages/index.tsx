@@ -3,6 +3,7 @@ import { useMemo } from "react"
 import Editor from "../view/component/Editor"
 import { decodeBase64 } from "../utils/base64/encodeBase64"
 import { parse as queryParse } from "query-string"
+import Head from "next/head"
 
 const defaultInitBlocks = [
   {
@@ -29,11 +30,16 @@ const Index: NextPage<IndexProps> = ({ code }) => {
   }, [code])
 
   return (
-    <div className="h-full p-8">
-      <article className="mx-auto w-[800px] max-w-[90%] overflow-scroll">
-        <Editor className="min-h-[80vh]" initBlocks={initBlocks} />
-      </article>
-    </div>
+    <>
+      <Head>
+        <title>mini Notion</title>
+      </Head>
+      <div className="h-full p-8">
+        <article className="mx-auto w-[800px] max-w-[90%] overflow-scroll">
+          <Editor className="min-h-[80vh]" initBlocks={initBlocks} />
+        </article>
+      </div>
+    </>
   )
 }
 
